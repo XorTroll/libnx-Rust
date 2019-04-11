@@ -20,6 +20,8 @@ pub enum Key
     R = 128,
     ZL = 256,
     ZR = 512,
+    PLUS = 1024,
+    MINUS = 2048,
 }
 
 pub enum JoyConHoldMode

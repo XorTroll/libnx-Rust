@@ -45,25 +45,25 @@ impl Handle {
         }
     }
 
-    pub fn read_ex(buffer: &mut [u8], interface: u32) -> usize {
+    pub fn read_ex(&mut self, buffer: &mut [u8], interface: u32) -> usize {
         let buff_ptr = buffer as *mut _ as *mut _;
         let size = buffer.len();
         unsafe { sys::usbCommsReadEx(buff_ptr, size, interface) }
     }
 
-    pub fn read(buffer: &mut [u8]) -> usize {
+    pub fn read(&mut self, buffer: &mut [u8]) -> usize {
         let buff_ptr = buffer as *mut _ as *mut _;
         let size = buffer.len();
         unsafe { sys::usbCommsRead(buff_ptr, size) }
     }
 
-    pub fn write_ex(buffer: &[u8], interface: u32) -> usize {
+    pub fn write_ex(&mut self, buffer: &[u8], interface: u32) -> usize {
         let buff_ptr = buffer as *const _ as *const _;
         let size = buffer.len();
         unsafe { sys::usbCommsWriteEx(buff_ptr, size, interface) }
     }
 
-    pub fn write(buffer: &[u8]) -> usize {
+    pub fn write(&mut self, buffer: &[u8]) -> usize {
         let buff_ptr = buffer as *const _ as *const _;
         let size = buffer.len();
         unsafe { sys::usbCommsWrite(buff_ptr, size) }

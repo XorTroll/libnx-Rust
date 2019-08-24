@@ -19,6 +19,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 Result twiliWriteNamedPipe(Service *pipe, const char *ptr, size_t len);
 Result twiliCreateNamedOutputPipe(Service *srv_out, const char* name, size_t len);
 Result twiliInitialize(void);

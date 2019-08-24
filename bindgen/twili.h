@@ -14,7 +14,7 @@
   THIS SOFTWARE.
 */
 
-#include "../include/switch-nocrc.h"
+#include <switch.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -3,4 +3,4 @@
 
 #pragma once
 
-#include "../include/switch-nocrc.h"
+#include <switch.h>

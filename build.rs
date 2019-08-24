@@ -137,7 +137,7 @@ cfg_if! {
             build.include("/opt/devkitpro/libnx/include");
             build.include("twili/include");
             build.file("twili/src/twili.c");
-            build.target("aarch64-none-elf");
+            build.compiler("/opt/devkitpro/devkitA64/bin/aarch64-none-elf-gcc");
             build.compile("libtwili.a");
         }
     } else {
@@ -148,7 +148,7 @@ cfg_if! {
 cfg_if! {
     if #[cfg(all(feature = "twili", feature = "bindgen"))] {
         pub fn twili_bindgen() {
-            regen_bindings("bindgen/twili.h", "bindgen/twili.rs", 
+            regen_bindings("bindgen/twili.h", "bindgen/twili.rs",
                 Some(vec!["twiliWriteNamedPipe".to_string(), "twiliCreateNamedOutputPipe".to_string(), "twiliCreateNamedOutputPipe".to_string(), "twiliInitialize".to_string(), "twiliExit".to_string()])
             ).expect("Error generating twili bindings!");
         }
@@ -164,7 +164,6 @@ cfg_if! {
 }
 
 pub fn main() {
-    println!("Dummy!");
     bindgen();
     compile_twili();
     twili_bindgen();

@@ -86,23 +86,23 @@ cfg_if! {
             builder.generate().map_err(|_| std::io::Error::new(std::io::ErrorKind::Other, "Could not create file!")).and_then(|bnd| {
                 let mut file = OpenOptions::new().write(true).create(true).open(output)?;
                 file.write_all(br#"mod ctypes {
-    pub type c_void = core::ffi::c_void;
-    pub type c_char = u8;
-    pub type c_int = i32;
-    pub type c_long = i64;
-    pub type c_longlong = i64;
-    pub type c_schar = i8;
-    pub type c_short = i16;
-    pub type c_uchar = u8;
-    pub type c_uint = u32;
-    pub type c_ulong = u64;
-    pub type c_ulonglong = u64;
-    pub type c_ushort = u16;
-    pub type size_t = u64;
-    pub type ssize_t = i64;
-    pub type c_float = f32;
-    pub type c_double = f64;
-}"#)?;
+                    pub type c_void = core::ffi::c_void;
+                    pub type c_char = u8;
+                    pub type c_int = i32;
+                    pub type c_long = i64;
+                    pub type c_longlong = i64;
+                    pub type c_schar = i8;
+                    pub type c_short = i16;
+                    pub type c_uchar = u8;
+                    pub type c_uint = u32;
+                    pub type c_ulong = u64;
+                    pub type c_ulonglong = u64;
+                    pub type c_ushort = u16;
+                    pub type size_t = u64;
+                    pub type ssize_t = i64;
+                    pub type c_float = f32;
+                    pub type c_double = f64;
+                }"#)?;
                 bnd.write(Box::new(file)).map(|_| bnd)
             })
         }
@@ -135,8 +135,8 @@ cfg_if! {
             build.include("/opt/devkitpro/devkitA64/lib/gcc/aarch64-none-elf/8.3.0/include/");
             build.include("/opt/devkitpro/devkitA64/aarch64-none-elf/include");
             build.include("/opt/devkitpro/libnx/include");
-            build.include("twili-libnx/include");
-            build.file("twili-libnx/src/twili.c");
+            build.include("twili/include");
+            build.file("twili/src/twili.c");
             build.target("aarch64-none-elf");
             build.compile("libtwili.a");
         }
@@ -164,6 +164,7 @@ cfg_if! {
 }
 
 pub fn main() {
+    println!("Dummy!");
     bindgen();
     compile_twili();
     twili_bindgen();

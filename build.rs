@@ -12,50 +12,39 @@ cfg_if! {
         #[derive(Debug)]
         struct CustomCallbacks;
 
-        impl ParseCallbacks for CustomCallbacks
-        {
-            fn will_parse_macro(&self, _name: &str) -> MacroParsingBehavior
-            {
+        impl ParseCallbacks for CustomCallbacks {
+            fn will_parse_macro(&self, _name: &str) -> MacroParsingBehavior {
                 MacroParsingBehavior::Default
             }
 
-            fn int_macro(&self, _name: &str, _value: i64) -> Option<IntKind>
-            {
-                if _name.starts_with("POLL") && _value < i16::max_value() as i64 && _value > i16::min_value() as i64
-                {
+            fn int_macro(&self, _name: &str, _value: i64) -> Option<IntKind> {
+                if _name.starts_with("POLL") && _value < i16::max_value() as i64 && _value > i16::min_value() as i64 {
                     Some(IntKind::I16)
                 }
-                else if _name.starts_with("DT_") && _value > 0 && _value < u8::max_value() as i64
-                {
+                else if _name.starts_with("DT_") && _value > 0 && _value < u8::max_value() as i64 {
                     Some(IntKind::U8)
                 }
-                else if _name.starts_with("S_IF") && _value > 0 && _value < u32::max_value() as i64
-                {
+                else if _name.starts_with("S_IF") && _value > 0 && _value < u32::max_value() as i64 {
                     Some(IntKind::U32)
                 }
-                else if _value < i32::max_value() as i64 && _value > i32::min_value() as i64
-                {
+                else if _value < i32::max_value() as i64 && _value > i32::min_value() as i64 {
                     Some(IntKind::I32)
                 }
-                else
-                {
+                else {
                     None
                 }
             }
 
-            fn enum_variant_behavior(&self, _enum_name: Option<&str>, _original_variant_name: &str, _variant_value: EnumVariantValue,) -> Option<EnumVariantCustomBehavior>
-            {
+            fn enum_variant_behavior(&self, _enum_name: Option<&str>, _original_variant_name: &str, _variant_value: EnumVariantValue,) -> Option<EnumVariantCustomBehavior> {
                 None
             }
 
-            fn enum_variant_name(&self, _enum_name: Option<&str>, _original_variant_name: &str, _variant_value: EnumVariantValue,) -> Option<String>
-            {
+            fn enum_variant_name(&self, _enum_name: Option<&str>, _original_variant_name: &str, _variant_value: EnumVariantValue,) -> Option<String> {
                 None
             }
         }
 
-        pub fn regen_bindings(input: &str, output: &str, whitelist: Option<Vec<String>>) -> Result<bindgen::Bindings, std::io::Error>
-        {
+        pub fn regen_bindings(input: &str, output: &str, whitelist: Option<Vec<String>>) -> Result<bindgen::Bindings, std::io::Error> {
             // we don't care if deletion succeeds, as long as the file is gone
             let _ = std::fs::remove_file(output);
             assert!(!std::path::Path::new(output).exists());
@@ -107,15 +96,10 @@ cfg_if! {
             })
         }
 
-        pub fn bindgen()
-        {
-            // Where the Rust code will be generated to
+        pub fn bindgen() {
             let gen_path = "bindgen/libnx.rs";
-
-            // Input header
             let header_wrapper = "bindgen/libnx.h";
 
-            // Use bindgen crate to process libnx headers
             regen_bindings(header_wrapper, gen_path, None).expect("Error generating libnx bindings!");
         }
     } else {
@@ -141,7 +125,8 @@ cfg_if! {
             build.compile("libtwili.a");
         }
     } else {
-        pub fn compile_twili() {}
+        pub fn compile_twili() {
+        }
     }
 }
 
@@ -159,7 +144,8 @@ cfg_if! {
             }
         }
     } else {
-        pub fn twili_bindgen() {}
+        pub fn twili_bindgen() {
+        }
     }
 }
 

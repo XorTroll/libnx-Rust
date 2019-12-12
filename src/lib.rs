@@ -1,8 +1,8 @@
-#![cfg_attr(feature = "sysroot", no_std)]
-#![cfg_attr(not(feature = "sysroot"), feature(asm))]
+#![cfg_attr(feature = "rustc-dep-of-std", no_std)]
+#![cfg_attr(not(feature = "rustc-dep-of-std"), feature(asm))]
 #![macro_use]
 
-#[cfg(not(feature = "sysroot"))]
+#[cfg(not(feature = "rustc-dep-of-std"))]
 extern crate core;
 
 extern crate cfg_if;

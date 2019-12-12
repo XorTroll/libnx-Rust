@@ -18,7 +18,7 @@ use cfg_if::cfg_if;
 pub mod sys;
 
 cfg_if! {
-    if #[cfg(not(feature = "sysroot"))] {
+    if #[cfg(not(feature = "rustc-dep-of-std"))] {
         pub mod macros;
 
         pub mod sm;

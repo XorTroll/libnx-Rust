@@ -118,6 +118,8 @@ cfg_if! {
             // Use bindgen crate to process libnx headers
             regen_bindings(header_wrapper, gen_path, None).expect("Error generating libnx bindings!");
         }
+    } else if #[cfg(feature = "rustc-dep-of-std")] {
+        pub fn bindgen() {}
     } else {
         pub fn bindgen() {
             if !std::path::Path::new("bindgen/libnx.rs").exists() {

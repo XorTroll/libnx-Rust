@@ -3,6 +3,7 @@ name = "libnx"
 version = "0.1.0"
 authors = ["XorTroll", "ischeinkman <scheinkman.ilan@gmail.com>", "Switchbrew"]
 links = "nx"
+license = "MIT"
 
 [lib]
 crate_type = ["rlib"]

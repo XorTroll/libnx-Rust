@@ -1,8 +1,13 @@
+#![cfg_attr(feature = "rustc-dep-of-std", no_std)]
+#![cfg_attr(feature = "rustc-dep-of-std", feature(core_intrinsics, lang_items, start))]
+
 extern crate cfg_if;
 
-use cfg_if::cfg_if;
+#[cfg(feature = "rustc-dep-of-std")]
+#[link(name = "c")]
+extern {}
 
-cfg_if! {
+::cfg_if::cfg_if! {
     if #[cfg(feature = "bindgen")] {
         extern crate bindgen;
         use bindgen::callbacks::{ EnumVariantCustomBehavior, EnumVariantValue, IntKind, MacroParsingBehavior, ParseCallbacks };
@@ -129,7 +134,7 @@ cfg_if! {
     }
 }
 
-cfg_if! {
+::cfg_if::cfg_if! {
     if #[cfg(feature = "twili")] {
         pub fn compile_twili() {
             let mut build = cc::Build::new();
@@ -147,7 +152,7 @@ cfg_if! {
     }
 }
 
-cfg_if! {
+::cfg_if::cfg_if! {
     if #[cfg(all(feature = "twili", feature = "bindgen"))] {
         pub fn twili_bindgen() {
             regen_bindings("bindgen/twili.h", "bindgen/twili.rs", 
@@ -165,8 +170,27 @@ cfg_if! {
     }
 }
 
+#[cfg(feature = "rustc-dep-of-std")]
+#[start]
+pub fn main(_argc: isize, _argv: *const *const u8) -> isize {
+    0
+}
+
+#[cfg(not(feature = "rustc-dep-of-std"))]
 pub fn main() {
     bindgen();
     compile_twili();
     twili_bindgen();
+}
+
+#[cfg(feature = "rustc-dep-of-std")]
+#[panic_handler]
+fn panic_handler(_info: &core::panic::PanicInfo) -> ! {
+    unsafe { core::intrinsics::abort() }
+}
+
+#[cfg(feature = "rustc-dep-of-std")]
+#[lang = "eh_personality"]
+fn rust_eh_personality() -> ! {
+    unsafe { core::intrinsics::abort() }
 }
